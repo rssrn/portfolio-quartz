@@ -53,11 +53,9 @@
 }
 
 /* --- 3. LARGE DESKTOP (1450px+) --- */
-/* This is where we maximize the space as requested */
 @media (min-width: 1450px) {
-  /* Shrink TOC further to reduce right margin noise */
   .sidebar.right {
-    width: 140px !important; 
+    width: 250px !important; 
   }
 
   /* Make images MUCH bigger */
