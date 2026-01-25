@@ -70,56 +70,42 @@
   }
 }
 
+
 /* --- VIEWPORT-ONLY TOC HIGHLIGHT --- */
 
-/* 1. Reset all TOC items to the "not-yet-seen" grey color */
+/* 1. Default State: All items are light grey */
 .toc ul li a {
   color: var(--gray) !important;
-  opacity: 0.6;
-  transition: all 0.2s ease;
+  opacity: 0.3 !important;
+  transition: all 0.3s ease;
+  filter: grayscale(1);
 }
 
-/* 2. When an item is 'active' (passed or in view), keep it greyed out... */
+/* 2. Highlight EVERY active item (this is the default Quartz behavior) */
 .toc ul li a.active {
+  color: var(--secondary) !important;
+  opacity: 1 !important;
+  filter: grayscale(0);
+}
+
+/* 3. THE REVERTER: 
+   If an active item is followed by ANOTHER active item further down the list,
+   it means the top one is no longer the "current" section. 
+   We force it back to the greyed-out state. */
+.toc li:has(a.active) ~ li:has(a.active) {
+  /* This is a bit complex, so we target the links inside the previous siblings */
+}
+
+/* Let's use a cleaner logic that Quartz supports better: */
+.toc a.active {
+  opacity: 0.3 !important; /* Dim everything that is active */
+  filter: grayscale(1);
   color: var(--gray) !important;
-  opacity: 0.6;
-}
-
-/* 3. ...EXCEPT for the 'last' active item. 
-      Because Quartz adds .active to everything above the fold, 
-      the 'last' one in the list is the one you are currently looking at. */
-.toc ul li a.active:last-of-type,
-.toc ul li:has(a.active) + li:not(:has(a.active)) pre-sibling-logic, /* CSS is limited here, so we use a robust selector */
-.toc ul li a.active {
-   /* This is a fallback; Quartz's JS usually handles the 'current' logic by 
-      applying a specific state. If it doesn't, we can force it: */
-}
-
-/* Robust Approach: Target the most recent active item */
-.toc a.active {
-  /* We slightly darken it but not fully */
-  color: var(--darkgray) !important;
-  opacity: 0.5;
-}
-
-/* Highlighting the 'Current' one specifically */
-/* Quartz 4 often applies a specific hierarchy. We will highlight the 
-   item that matches the current scroll spy target. */
-.toc a.active[data-current="true"], 
-.toc li:has(a.active) ~ li a.active {
-  /* This resets the ones 'above' to be lighter */
-  opacity: 0.3; 
-}
-
-/* The "Winning" Selector: Only the most recent active item gets full visibility */
-.toc a.active {
-    filter: grayscale(1);
-    opacity: 0.3;
 }
 
 .toc a.active:last-of-type {
-    filter: grayscale(0);
-    opacity: 1 !important;
-    color: var(--secondary) !important; /* Use your theme's secondary color */
-    font-weight: 600;
+  opacity: 1 !important; /* Only the very last active item (closest to current scroll) glows */
+  filter: grayscale(0);
+  color: var(--secondary) !important;
+  font-weight: 600;
 }
