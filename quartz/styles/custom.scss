@@ -1,3 +1,47 @@
-@use "./base.scss";
+/* custom.scss */
 
-// put your custom CSS here!
+// 1. Mobile & Default Styles (Keep images inline)
+.callout[data-callout="aside-left"] {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 1em 0;
+
+  .callout-title {
+    display: none; // Hide the "Aside Left" header
+  }
+
+  .callout-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+  }
+}
+
+// 2. Desktop Layout (Move to left margin)
+@media (min-width: 1200px) {
+  // Ensure the article container allows content to overflow the sides
+  .center {
+    position: relative;
+  }
+
+  .callout[data-callout="aside-left"] {
+    position: absolute;
+    left: -260px; // Adjust this based on your sidebar width/empty space
+    width: 240px;  // Width of the image column
+    margin: 0;
+    
+    .callout-content {
+      // If you want the two images side-by-side in the margin, 
+      // change flex-direction to 'row' or use a grid.
+      flex-direction: column; 
+    }
+  }
+}@use "./base.scss";
+
