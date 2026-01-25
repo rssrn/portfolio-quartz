@@ -1,56 +1,56 @@
 @use "./base.scss";
 
-// 1. Mobile & Default Styles
+// --- LAYOUT OVERRIDES ---
+:root {
+  // Shrink the sidebars to give center more 'relative' margin space
+  --sidePanelWidth: 200px; 
+  // Reduce the gap between the sidebars and the content
+  --gridGap: 1.5rem;
+}
+
+// Ensure the main container can actually grow wider if needed
+@media (min-width: 1200px) {
+  .center {
+    // Increase max-width of content area slightly if desired
+    max-width: 750px !important; 
+  }
+
+  // --- REFINED ASIDE-LEFT ---
+  .callout[data-callout="aside-left"] {
+    position: absolute;
+    // We can now use a larger image because we shrunk the gap
+    left: -280px; 
+    width: 250px; 
+    margin: 0 !important;
+
+    .callout-content img {
+      width: 100% !important;
+      max-width: 250px !important; // Bigger images!
+      border: 1px solid var(--lightgray);
+      transition: transform 0.2s ease;
+      
+      &:hover {
+        transform: scale(1.05); // Nice little interaction
+      }
+    }
+  }
+
+  // Shrink the Table of Contents (Right Sidebar)
+  .sidebar.right {
+    width: 180px;
+    font-size: 0.85rem; // Smaller text to fit the narrower bar
+  }
+}
+
+// --- PREVIOUS CALLOUT STYLES (Keep these) ---
 .callout[data-callout="aside-left"] {
   background-color: transparent !important;
   border: none !important;
   padding: 0 !important;
-  margin: 1.5em 0;
-
-  .callout-title {
-    display: none !important;
-  }
-
+  .callout-title { display: none !important; }
   .callout-content {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    
-    img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-    }
-  }
-}
-
-// 2. Desktop Layout
-@media (min-width: 1200px) {
-  // Target the container to make sure it doesn't collapse
-  .center {
-    position: relative;
-  }
-
-  .callout[data-callout="aside-left"] {
-    // Using absolute positioning again, but with a fixed width 
-    // to ensure it stays outside the text flow entirely.
-    position: absolute;
-    left: -240px; 
-    width: 200px;
-    margin: 0 !important;
-    z-index: 10;
-
-    .callout-content img {
-      width: 100% !important;
-      max-width: 200px !important;
-      display: block;
-      margin-bottom: 10px;
-    }
-  }
-  
-  // This ensures your headers/text don't try to fill the 'gap'
-  h1, h2, h3, p {
-    position: relative;
-    clear: both;
+    gap: 15px;
   }
 }
