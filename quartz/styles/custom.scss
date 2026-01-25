@@ -1,6 +1,6 @@
 @use "./base.scss";
 
-// 1. Mobile & Tablet (Inline)
+// 1. Mobile & Default Styles
 .callout[data-callout="aside-left"] {
   background-color: transparent !important;
   border: none !important;
@@ -24,20 +24,33 @@
   }
 }
 
-// 2. Desktop (Push to Left Margin)
+// 2. Desktop Layout
 @media (min-width: 1200px) {
+  // Target the container to make sure it doesn't collapse
+  .center {
+    position: relative;
+  }
+
   .callout[data-callout="aside-left"] {
-    float: left;
-    width: 200px;         // Width of the images
-    margin-left: -240px;  // Pulls images into the left gutter
-    margin-right: 40px;   // Ensures text doesn't touch the images
-    margin-top: 0;
-    margin-bottom: 0;
-    clear: left;          // Prevents stacking issues with multiple projects
-    
+    // Using absolute positioning again, but with a fixed width 
+    // to ensure it stays outside the text flow entirely.
+    position: absolute;
+    left: -240px; 
+    width: 200px;
+    margin: 0 !important;
+    z-index: 10;
+
     .callout-content img {
-      width: 200px !important; // Forces the width
+      width: 100% !important;
       max-width: 200px !important;
+      display: block;
+      margin-bottom: 10px;
     }
+  }
+  
+  // This ensures your headers/text don't try to fill the 'gap'
+  h1, h2, h3, p {
+    position: relative;
+    clear: both;
   }
 }
