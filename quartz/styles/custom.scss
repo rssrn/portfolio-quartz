@@ -1,18 +1,16 @@
 @use "./base.scss";
 
-/* 1. Reset Callout Defaults */
+/* --- 1. DEFAULT / MOBILE (Keep inline) --- */
 .callout[data-callout="aside-left"] {
   background-color: transparent !important;
   border: none !important;
   padding: 0 !important;
-  margin: 1em 0 !important;
+  margin: 1.5em 0 !important;
 
-  .callout-title {
-    display: none !important;
-  }
-
+  .callout-title { display: none !important; }
+  
   .callout-content {
-    /* Target the <p> tag Quartz is auto-generating */
+    /* Fix for Quartz wrapping images in <p> tags */
     & > p {
       display: flex;
       flex-direction: column;
@@ -22,34 +20,54 @@
     
     img {
       width: 100% !important;
-      height: auto !important;
-      border-radius: 8px;
       display: block;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
   }
 }
 
-/* 2. Desktop Layout (Width > 1200px) */
-@media (min-width: 1200px) {
-  /* Tighten sidebars to create a wider "gutter" */
-  :root {
-    --sidePanelWidth: 220px;
+/* --- 2. STANDARD LAPTOPS (1100px - 1449px) --- */
+/* Keep images modest here to prevent falling off-screen */
+@media (min-width: 1100px) {
+  .center {
+    max-width: 700px !important; /* Keep text column readable width */
+  }
+
+  .sidebar.right {
+    width: 160px !important; /* Shrink TOC slightly */
   }
 
   .callout[data-callout="aside-left"] {
-    float: left;            /* Use float instead of absolute */
-    width: 240px;           /* Size of your images */
-    margin-left: -280px !important; /* Pull into the left white space */
-    margin-right: 40px !important;  /* Space between images and text */
-    margin-top: 0 !important;
+    float: left;
+    clear: left;
     position: relative;
     z-index: 10;
-    clear: left;
+    
+    /* Moderate size for laptops */
+    width: 240px; 
+    margin-left: -270px !important; /* width + 30px gap */
+    margin-right: 30px !important;
+    margin-top: 5px !important;
+  }
+}
+
+/* --- 3. LARGE DESKTOP (1450px+) --- */
+/* This is where we maximize the space as requested */
+@media (min-width: 1450px) {
+  /* Shrink TOC further to reduce right margin noise */
+  .sidebar.right {
+    width: 140px !important; 
   }
 
-  /* Prevent text from overlapping if the window gets narrow */
-  .center {
-    max-width: 700px !important;
+  /* Make images MUCH bigger */
+  .callout[data-callout="aside-left"] {
+    width: 340px;                   /* +100px increase! */
+    margin-left: -380px !important; /* Pull further left */
+    margin-right: 40px !important;
+    
+    .callout-content img {
+      max-width: 340px !important;
+    }
   }
 }
