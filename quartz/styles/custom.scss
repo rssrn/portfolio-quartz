@@ -70,42 +70,42 @@
   }
 }
 
-
 /* --- VIEWPORT-ONLY TOC HIGHLIGHT --- */
 
-/* 1. Default State: All items are light grey */
-.toc ul li a {
+/* 1. Reset all TOC links to a baseline "inactive" state */
+.toc li a {
   color: var(--gray) !important;
   opacity: 0.3 !important;
-  transition: all 0.3s ease;
   filter: grayscale(1);
+  transition: opacity 0.3s ease, color 0.3s ease;
+  font-weight: 400;
 }
 
-/* 2. Highlight EVERY active item (this is the default Quartz behavior) */
-.toc ul li a.active {
-  color: var(--secondary) !important;
-  opacity: 1 !important;
-  filter: grayscale(0);
-}
-
-/* 3. THE REVERTER: 
-   If an active item is followed by ANOTHER active item further down the list,
-   it means the top one is no longer the "current" section. 
-   We force it back to the greyed-out state. */
-.toc li:has(a.active) ~ li:has(a.active) {
-  /* This is a bit complex, so we target the links inside the previous siblings */
-}
-
-/* Let's use a cleaner logic that Quartz supports better: */
-.toc a.active {
-  opacity: 0.3 !important; /* Dim everything that is active */
-  filter: grayscale(1);
+/* 2. Style for any item Quartz considers "active" (above the scroll line) */
+/* We keep these dim so they look like they've 'passed' */
+.toc li a.active {
+  opacity: 0.3 !important;
   color: var(--gray) !important;
 }
 
-.toc a.active:last-of-type {
-  opacity: 1 !important; /* Only the very last active item (closest to current scroll) glows */
-  filter: grayscale(0);
-  color: var(--secondary) !important;
-  font-weight: 600;
+/* 3. THE "CURRENT" SECTION: 
+   This targets an active link that does NOT have another active link 
+   appearing later in the list. */
+.toc li:has(a.active) {
+  /* If this active li is NOT followed by another active li, it's the current one */
+  &:not(:has(~ li:has(a.active))) a.active {
+    opacity: 1 !important;
+    filter: grayscale(0);
+    color: var(--secondary) !important; /* This is your theme's dark/blue accent */
+    font-weight: 600;
+    position: relative;
+  }
+}
+
+/* Optional: Add a small indicator dot or line to the current one */
+.toc li:has(a.active):not(:has(~ li:has(a.active))) a.active::before {
+  content: "•";
+  position: absolute;
+  left: -15px;
+  color: var(--secondary);
 }
