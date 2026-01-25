@@ -1,57 +1,55 @@
 @use "./base.scss";
 
-/* 1. Global Reset for the Sidebar Callout */
+/* 1. Reset Callout Defaults */
 .callout[data-callout="aside-left"] {
   background-color: transparent !important;
   border: none !important;
   padding: 0 !important;
-  margin: 1em 0;
+  margin: 1em 0 !important;
 
   .callout-title {
     display: none !important;
   }
 
   .callout-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    /* Target the <p> tag Quartz is auto-generating */
+    & > p {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin: 0 !important;
+    }
     
     img {
-      width: 100%;
-      height: auto;
+      width: 100% !important;
+      height: auto !important;
       border-radius: 8px;
       display: block;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
   }
 }
 
-/* 2. Desktop Enhancements */
+/* 2. Desktop Layout (Width > 1200px) */
 @media (min-width: 1200px) {
-  /* Give the main content more room */
-  .center {
-    max-width: 800px !important;
+  /* Tighten sidebars to create a wider "gutter" */
+  :root {
+    --sidePanelWidth: 220px;
   }
 
-  /* Reduce Right Sidebar (TOC) width */
-  .sidebar.right {
-    width: 180px !important;
-    padding-left: 1rem;
-  }
-
-  /* The "Marginalia" Magic */
   .callout[data-callout="aside-left"] {
-    position: absolute;
-    /* This anchors the images to the left of the text column */
-    left: -280px; 
-    width: 250px;
-    margin: 0 !important;
-    z-index: 1;
+    float: left;            /* Use float instead of absolute */
+    width: 240px;           /* Size of your images */
+    margin-left: -280px !important; /* Pull into the left white space */
+    margin-right: 40px !important;  /* Space between images and text */
+    margin-top: 0 !important;
+    position: relative;
+    z-index: 10;
+    clear: left;
+  }
 
-    .callout-content img {
-      width: 250px !important;
-      max-width: 250px !important;
-      /* Add a subtle shadow so they pop against the background */
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+  /* Prevent text from overlapping if the window gets narrow */
+  .center {
+    max-width: 700px !important;
   }
 }
