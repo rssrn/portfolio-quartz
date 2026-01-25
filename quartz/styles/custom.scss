@@ -1,5 +1,7 @@
 /* custom.scss */
 
+@use "./base.scss";
+
 // 1. Mobile & Default Styles (Keep images inline)
 .callout[data-callout="aside-left"] {
   background: transparent;
@@ -43,5 +45,5 @@
       flex-direction: column; 
     }
   }
-}@use "./base.scss";
+}
 
