@@ -1,16 +1,14 @@
-/* custom.scss */
-
 @use "./base.scss";
 
-// 1. Mobile & Default Styles (Keep images inline)
+// 1. Mobile & Tablet (Inline)
 .callout[data-callout="aside-left"] {
-  background: transparent;
-  border: none;
-  padding: 0;
-  margin: 1em 0;
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 1.5em 0;
 
   .callout-title {
-    display: none; // Hide the "Aside Left" header
+    display: none !important;
   }
 
   .callout-content {
@@ -21,29 +19,25 @@
     img {
       width: 100%;
       height: auto;
-      border-radius: 5px;
+      border-radius: 8px;
     }
   }
 }
 
-// 2. Desktop Layout (Move to left margin)
+// 2. Desktop (Push to Left Margin)
 @media (min-width: 1200px) {
-  // Ensure the article container allows content to overflow the sides
-  .center {
-    position: relative;
-  }
-
   .callout[data-callout="aside-left"] {
-    position: absolute;
-    left: -260px; // Adjust this based on your sidebar width/empty space
-    width: 240px;  // Width of the image column
-    margin: 0;
+    float: left;
+    width: 200px;         // Width of the images
+    margin-left: -240px;  // Pulls images into the left gutter
+    margin-right: 40px;   // Ensures text doesn't touch the images
+    margin-top: 0;
+    margin-bottom: 0;
+    clear: left;          // Prevents stacking issues with multiple projects
     
-    .callout-content {
-      // If you want the two images side-by-side in the margin, 
-      // change flex-direction to 'row' or use a grid.
-      flex-direction: column; 
+    .callout-content img {
+      width: 200px !important; // Forces the width
+      max-width: 200px !important;
     }
   }
 }
-
