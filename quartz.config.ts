@@ -12,9 +12,6 @@ const config: QuartzConfig = {
     pageTitleSuffix: "",
     enableSPA: true,
     /*enablePopovers: true,*/
-    analytics: {
-      provider: null,
-    },
     head: {
       scripts: [
         {
