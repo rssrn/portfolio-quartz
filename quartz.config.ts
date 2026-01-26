@@ -12,15 +12,6 @@ const config: QuartzConfig = {
     pageTitleSuffix: "",
     enableSPA: true,
     /*enablePopovers: true,*/
-    head: {
-      scripts: [
-        {
-          src: "https://cloud.umami.is/script.js",
-          defer: true,
-          "data-website-id": "51d20a9d-7594-47f7-a2bb-014ab9c4b61b",
-        },
-      ],
-    },
     locale: "en-US",
     baseUrl: "quartz.jzhao.xyz",
     ignorePatterns: ["private", "templates", ".obsidian"],
