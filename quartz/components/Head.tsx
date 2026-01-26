@@ -86,6 +86,13 @@ export default (() => {
         <meta name="description" content={description} />
         <meta name="generator" content="Quartz" />
 
+        <script 
+          src="https://cloud.umami.is/script.js" 
+          data-website-id="51d20a9d-7594-47f7-a2bb-014ab9c4b61b" 
+          data-auto-track="true"
+          defer 
+        />
+
         {css.map((resource) => CSSResourceToStyleElement(resource, true))}
         {js
           .filter((resource) => resource.loadTime === "beforeDOMReady")
