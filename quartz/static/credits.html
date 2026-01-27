@@ -40,6 +40,15 @@
         .back-link {
             margin-bottom: 1.5rem;
         }
+        /* Make table wider and ensure mobile scrolling */
+        .table-container {
+            overflow-x: auto;
+            margin: 0 -1rem; /* Extend into side margins */
+        }
+        .table-container > table {
+            width: 100%;
+            min-width: 600px; /* Ensure table has minimum width for readability */
+        }
     </style>
 </head>
 <body>
@@ -48,8 +57,9 @@
             <article class="article">
                 <header>
                     <h1 class="article-title">Credits & Acknowledgments</h1>
-                    <p class="content-meta">Technologies powering this portfolio website</p>
                 </header>
+
+                <p>Technologies powering this portfolio website</p>
 
                 <p class="back-link"><a href="/" aria-label="Back to Portfolio"><span aria-hidden="true">←</span> Back to Portfolio</a></p>
 
