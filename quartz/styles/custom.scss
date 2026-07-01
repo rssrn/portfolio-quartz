@@ -1,4 +1,113 @@
 @use "./base.scss";
+@use "./variables.scss" as *;
+
+/* --- 0. PROJECT CARD GRID --- */
+body[data-slug="index"] {
+  .page-header {
+    margin-top: 1.5rem !important;
+  }
+
+  .sidebar {
+    padding-top: 1.5rem !important;
+  }
+
+  article > p:first-of-type {
+    margin: 0.5rem 0 !important;
+  }
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+@media (min-width: 768px) {
+  .project-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--light);
+  border: 1px solid var(--lightgray);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .project-card-image {
+    position: relative;
+    aspect-ratio: 16 / 8;
+    overflow: hidden;
+    margin: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: pointer;
+      display: block;
+      margin: 0;
+      border-radius: 0;
+    }
+
+    .lightbox-count-badge {
+      position: absolute;
+      bottom: 0.6rem;
+      right: 0.6rem;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      font-size: 0.75em;
+      font-weight: $semiBoldWeight;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      pointer-events: none;
+    }
+  }
+
+  .project-card-body {
+    padding: 0.85rem 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    h3 {
+      margin: 0 0 0.15rem 0;
+    }
+
+    .project-tagline {
+      color: var(--secondary);
+      font-weight: $semiBoldWeight;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-size: 0.75em;
+      margin: 0 0 0.4rem 0;
+    }
+
+    p {
+      flex-grow: 1;
+      margin: 0;
+    }
+
+    .project-card-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+      font-size: 0.9em;
+    }
+  }
+}
 
 /* --- 1. DEFAULT / MOBILE (Keep inline) --- */
 .callout[data-callout="aside-left"] {
@@ -30,8 +139,8 @@
 /* --- 2. STANDARD LAPTOPS (1100px - 1449px) --- */
 /* Keep images modest here to prevent falling off-screen */
 @media (min-width: 1100px) {
-  .center {
-    max-width: 700px !important; /* Keep text column readable width */
+  .page:has(.callout[data-callout="aside-left"]) .center {
+    max-width: 700px !important; /* Keep text column readable width next to floated images */
   }
 
   .sidebar.right {

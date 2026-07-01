@@ -9,9 +9,18 @@
     <style>
         /* Minimal custom styles for favicon display and section headers */
         .icon-col {
-            width: 32px;
+            width: 4%;
             text-align: center;
             vertical-align: middle;
+        }
+        table {
+            table-layout: fixed;
+            box-sizing: border-box;
+        }
+        th,
+        td {
+            box-sizing: border-box;
+            min-width: 0;
         }
         .favicon-img {
             width: 16px;
@@ -42,10 +51,16 @@
         }
         /* Make table wider on desktop */
         .table-container {
-            margin: 0 -1rem; /* Extend into side margins */
+            overflow-x: auto;
         }
         .table-container > table {
             width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        html,
+        body {
+            overflow-x: hidden;
         }
     </style>
 </head>
@@ -66,9 +81,9 @@
                         <thead>
                             <tr>
                                 <th class="icon-col"></th>
-                                <th style="width: 25%">Person/Project/Service</th>
-                                <th style="width: 50%">Purpose</th>
-                                <th style="width: 25%">License</th>
+                                <th style="width: 16%">Person/Project/Service</th>
+                                <th style="width: 51%">Purpose</th>
+                                <th style="width: 29%">License</th>
                             </tr>
                         </thead>
                         <tbody id="credits-body">
@@ -90,7 +105,7 @@
                             <tr>
                                 <td class="icon-col"></td>
                                 <td><a href="https://claude.ai/" target="_blank">Anthropic - Claude AI</a></td>
-                                <td>Author of <a href="/birdbird---Human-Contribution-Summary">one summary page</a></td>
+                                <td>Design assistance for this portfolio website; author of <a href="/birdbird---Human-Contribution-Summary">birdbird</a> and <a href="/NewsChart---Human-Contribution-Summary">NewsChart</a> summary pages</td>
                                 <td>Commercial Service</td>
                             </tr>
 
