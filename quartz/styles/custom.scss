@@ -56,12 +56,18 @@ body[data-slug="index"] {
     }
   }
 
-  /* Reclaim the fixed side gutters so the grid can breathe on wide screens.
-     Only touch the desktop track count — tablet/mobile use a different
-     number of grid-template-areas columns and would misalign otherwise. */
+  /* Reclaim the fixed side gutters so the grid can breathe. Desktop and
+     tablet layouts use a different number of grid-template-areas columns
+     (3 vs 2), so each needs its own track-count override to avoid misalignment. */
   @media all and ($desktop) {
     #quartz-body {
       grid-template-columns: 0 1fr 0 !important;
+    }
+  }
+
+  @media all and ($tablet) {
+    #quartz-body {
+      grid-template-columns: 0 1fr !important;
     }
   }
 
