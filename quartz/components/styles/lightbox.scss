@@ -1,3 +1,7 @@
+// The overlay is always a black scrim regardless of site theme, so its
+// controls use fixed light-on-dark colors rather than the --light/--dark
+// theme variables (which flip meaning between light and dark mode and
+// previously made these controls nearly invisible in dark mode).
 .lightbox-overlay {
   display: none;
   position: fixed;
@@ -20,29 +24,56 @@
   }
 
   .lightbox-caption {
-    color: var(--light);
+    color: #f2f2f2;
     text-align: center;
     max-width: 80vw;
     margin-top: 1em;
   }
 
   .lightbox-counter {
-    color: var(--light);
-    opacity: 0.7;
-    font-size: 0.85em;
-    margin-top: 0.4em;
+    color: #f2f2f2;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8em;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-top: 0.75em;
+  }
+
+  .lightbox-close,
+  .lightbox-prev,
+  .lightbox-next {
+    color: #f2f2f2;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    cursor: pointer;
+    line-height: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background-color 0.15s ease,
+      transform 0.15s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #f2f2f2;
+      outline-offset: 2px;
+    }
   }
 
   .lightbox-close {
     position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    font-size: 2rem;
-    color: var(--light);
-    background: none;
-    border: none;
-    cursor: pointer;
-    line-height: 1;
+    top: 1.25rem;
+    right: 1.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.5rem;
   }
 
   .lightbox-prev,
@@ -50,20 +81,30 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 2.5rem;
-    color: var(--light);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.75rem;
     user-select: none;
+
+    &:hover {
+      transform: translateY(-50%) scale(1.08);
+    }
   }
 
   .lightbox-prev {
-    left: 0.5rem;
+    left: 1rem;
   }
 
   .lightbox-next {
-    right: 0.5rem;
+    right: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .lightbox-prev {
+      left: 0.5rem;
+    }
+    .lightbox-next {
+      right: 0.5rem;
+    }
   }
 }

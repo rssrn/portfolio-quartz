@@ -1,56 +1,152 @@
 @use "./base.scss";
 @use "./variables.scss" as *;
 
+/* Quartz always inserts an <hr> before the footer; it's just noise here. */
+hr:has(+ .page-footer) {
+  display: none;
+}
+
 /* --- 0. PROJECT CARD GRID --- */
+
+:root {
+  --accent: #3454d1;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(52, 84, 209, 0.09);
+  --card-surface: #ffffff;
+  --live-dot: #de5b3f;
+  /* var(--gray) fails WCAG AA (4.5:1) for small text on --light; this is
+     tuned to pass against --light in each theme while still reading as muted. */
+  --muted-readable: #6b6b6b;
+}
+
+html[saved-theme="dark"] {
+  --accent: #8296ff;
+  --accent-ink: #12141a;
+  --accent-soft: rgba(130, 150, 255, 0.14);
+  --card-surface: #191d24;
+  --live-dot: #ff8b6a;
+  --muted-readable: #949494;
+}
+
 body[data-slug="index"] {
   .page-header {
-    margin-top: 1.5rem !important;
+    margin-top: 1rem !important;
   }
 
   .sidebar {
     padding-top: 1.5rem !important;
   }
 
+  .article-title {
+    font-size: 1.85rem;
+  }
+
   article > p:first-of-type {
-    margin: 0.5rem 0 !important;
+    margin: 0.35rem 0 1.1rem 0 !important;
+    color: var(--muted-readable);
+    white-space: nowrap;
+
+    @media all and ($mobile) {
+      white-space: normal;
+    }
+
+    /* Drop the external-link icon after the LinkedIn mention — decorative noise here */
+    .external-icon {
+      display: none !important;
+    }
+  }
+
+  /* Reclaim the fixed side gutters so the grid can breathe on wide screens.
+     Only touch the desktop track count — tablet/mobile use a different
+     number of grid-template-areas columns and would misalign otherwise. */
+  @media all and ($desktop) {
+    #quartz-body {
+      grid-template-columns: 0 1fr 0 !important;
+    }
+  }
+
+  .sidebar.left,
+  .sidebar.right {
+    display: none;
+  }
+
+  .page,
+  .center {
+    max-width: min(96vw, 1720px) !important;
   }
 }
 
 .project-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 1.1rem;
   margin: 1rem 0;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 700px) {
   .project-grid {
     grid-template-columns: 1fr 1fr;
   }
 }
 
+@media (min-width: 1300px) {
+  .project-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+}
+
 .project-card {
+  --status-color: var(--gray);
+
   display: flex;
   flex-direction: column;
-  border-radius: 8px;
+  position: relative;
+  border-radius: 10px;
   overflow: hidden;
-  background-color: var(--light);
+  background-color: var(--card-surface);
   border: 1px solid var(--lightgray);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
+    border-color 0.18s ease,
+    transform 0.18s ease;
+
+  /* Signature accent rule: quiet until you engage with the card */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+    z-index: 2;
+  }
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    border-color: var(--accent);
+
+    &::before {
+      transform: scaleX(1);
+    }
+
+    .project-card-image img {
+      transform: scale(1.045);
+    }
+  }
+
+  &.is-live {
+    --status-color: var(--live-dot);
   }
 
   .project-card-image {
     position: relative;
-    aspect-ratio: 16 / 8;
+    aspect-ratio: 16 / 9;
     overflow: hidden;
     margin: 0;
+    background: var(--lightgray);
 
     img {
       width: 100%;
@@ -60,6 +156,7 @@ body[data-slug="index"] {
       display: block;
       margin: 0;
       border-radius: 0;
+      transition: transform 0.35s ease;
     }
 
     .lightbox-count-badge {
@@ -68,7 +165,7 @@ body[data-slug="index"] {
       right: 0.6rem;
       background-color: rgba(0, 0, 0, 0.6);
       color: #fff;
-      font-size: 0.75em;
+      font-size: 0.7em;
       font-weight: $semiBoldWeight;
       padding: 0.2rem 0.55rem;
       border-radius: 999px;
@@ -77,34 +174,116 @@ body[data-slug="index"] {
   }
 
   .project-card-body {
-    padding: 0.85rem 1rem;
+    padding: 0.8rem 0.95rem 0.9rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 
-    h3 {
-      margin: 0 0 0.15rem 0;
+    .project-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin: 0 0 0.35rem 0;
     }
 
-    .project-tagline {
-      color: var(--secondary);
-      font-weight: $semiBoldWeight;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      font-size: 0.75em;
-      margin: 0 0 0.4rem 0;
-    }
-
-    p {
-      flex-grow: 1;
+    h2 {
       margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.3;
+      min-width: 0;
+
+      /* Quartz auto-adds a "#heading" anchor icon; not useful on a project title */
+      a[role="anchor"] {
+        display: none !important;
+      }
+    }
+
+    .project-status {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+      font-family: var(--codeFont);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.68em;
+      font-weight: $semiBoldWeight;
+      color: var(--muted-readable);
+      line-height: 1.3;
+      margin: 0 0 0.55rem 0;
+
+      &::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        margin-top: 0.4em;
+        border-radius: 50%;
+        background: var(--status-color);
+        flex-shrink: 0;
+      }
+    }
+
+    p.project-description {
+      margin: 0;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      color: var(--darkgray);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .project-card-links {
       display: flex;
-      gap: 1rem;
-      margin-top: 0.5rem;
-      font-size: 0.9em;
+      align-items: center;
+      flex-shrink: 0;
+      gap: 0.4rem;
+      margin-top: 0.15rem;
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        font-size: 0.72rem;
+        font-weight: $semiBoldWeight;
+        line-height: 1;
+        padding: 0.36rem 0.65rem;
+        border-radius: 6px;
+        border: 1px solid transparent;
+        transition:
+          background-color 0.15s ease,
+          border-color 0.15s ease,
+          color 0.15s ease;
+
+        /* Quartz auto-appends an external-link svg; the button label is enough */
+        .external-icon {
+          display: none !important;
+        }
+      }
+
+      .read-more {
+        background: transparent;
+        border-color: var(--lightgray);
+        color: var(--darkgray);
+
+        &:hover {
+          border-color: var(--gray);
+          background: var(--highlight);
+        }
+      }
+
+      .live-site {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--accent-ink) !important;
+
+        &:hover {
+          background: color-mix(in srgb, var(--accent) 85%, black 15%);
+          border-color: color-mix(in srgb, var(--accent) 85%, black 15%);
+        }
+      }
     }
   }
 }
