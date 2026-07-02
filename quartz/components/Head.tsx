@@ -86,11 +86,11 @@ export default (() => {
         <meta name="description" content={description} />
         <meta name="generator" content="Quartz" />
 
-        <script 
-          src="https://cloud.umami.is/script.js" 
-          data-website-id="51d20a9d-7594-47f7-a2bb-014ab9c4b61b" 
+        <script
+          src="https://umami.rossarnold.uk/script.js"
+          data-website-id="4f268b69-ff2a-49b9-baeb-10e4cc59fe96"
           data-auto-track="true"
-          defer 
+          defer
         />
 
         {css.map((resource) => CSSResourceToStyleElement(resource, true))}
