@@ -9,12 +9,12 @@ import * as Plugin from "./quartz/plugins"
 const config: QuartzConfig = {
   configuration: {
     pageTitle: "Ross Arnold - Portfolio",
-    pageTitleSuffix: "",
+    pageTitleSuffix: " · Ross Arnold Portfolio",
     enableSPA: true,
     /*enablePopovers: true,*/
     locale: "en-US",
-    baseUrl: "portfolio.rossarn.workers.dev",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    baseUrl: "portfolio.rossarnold.uk",
+    ignorePatterns: ["private", "templates", ".obsidian", "CLAUDE.md"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
@@ -85,6 +85,7 @@ const config: QuartzConfig = {
       Plugin.Static(),
       Plugin.Favicon(),
       Plugin.NotFoundPage(),
+      Plugin.Robots(),
       // Comment out CustomOgImages to speed up build time
       Plugin.CustomOgImages(),
     ],
