@@ -62,6 +62,61 @@
         body {
             overflow-x: hidden;
         }
+
+        /* Stack table into cards on narrow screens so nothing gets squeezed */
+        @media (max-width: 600px) {
+            .table-container {
+                overflow-x: visible;
+            }
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+                width: 100% !important;
+                box-sizing: border-box;
+            }
+            thead {
+                display: none;
+            }
+            tbody tr {
+                margin-bottom: 1rem;
+                border: 1px solid var(--lightgray);
+                border-radius: 4px;
+                padding: 0.5rem 0.75rem;
+            }
+            tbody tr:has(th.section-header) {
+                border: none;
+                padding: 0;
+                margin: 1.5rem 0 0.5rem;
+            }
+            th.section-header {
+                border-radius: 4px;
+            }
+            .icon-col {
+                display: none;
+            }
+            td {
+                padding: 0.35rem 0;
+                text-align: left;
+            }
+            td::before {
+                content: attr(data-label);
+                display: block;
+                font-size: 0.75rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.02em;
+                opacity: 0.65;
+                margin-bottom: 0.15rem;
+            }
+            td:empty,
+            td:has(> .favicon-img:only-child) {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -92,21 +147,21 @@
                             </tr>
                             <tr>
                                 <td class="icon-col"></td>
-                                <td><a href="https://www.linkedin.com/in/rarnold/" target="_blank">Ross Arnold</a></td>
-                                <td>Main author</td>
-                                <td></td>
+                                <td data-label="Person/Project/Service"><a href="https://www.linkedin.com/in/rarnold/" target="_blank">Ross Arnold</a></td>
+                                <td data-label="Purpose">Main author</td>
+                                <td data-label="License"></td>
                             </tr>
                             <tr>
                                 <td class="icon-col"></td>
-                                <td><a href="https://obsidian.md/" target="_blank">Obsidian</a></td>
-                                <td>Note-taking app used for authoring markdown</td>
-                                <td>Commercial</td>
+                                <td data-label="Person/Project/Service"><a href="https://obsidian.md/" target="_blank">Obsidian</a></td>
+                                <td data-label="Purpose">Note-taking app used for authoring markdown</td>
+                                <td data-label="License">Commercial</td>
                             </tr>
                             <tr>
                                 <td class="icon-col"></td>
-                                <td><a href="https://claude.ai/" target="_blank">Anthropic - Claude AI</a></td>
-                                <td>Design assistance for this portfolio website; author of <a href="/birdbird---Human-Contribution-Summary">birdbird</a> and <a href="/NewsChart---Human-Contribution-Summary">NewsChart</a> summary pages</td>
-                                <td>Commercial Service</td>
+                                <td data-label="Person/Project/Service"><a href="https://claude.ai/" target="_blank">Anthropic - Claude AI</a></td>
+                                <td data-label="Purpose">Design assistance for this portfolio website; author of <a href="/birdbird---Human-Contribution-Summary">birdbird</a> and <a href="/NewsChart---Human-Contribution-Summary">NewsChart</a> summary pages</td>
+                                <td data-label="License">Commercial Service</td>
                             </tr>
 
                             <tr>
@@ -114,15 +169,15 @@
                             </tr>
                             <tr>
                                 <td class="icon-col"></a></td>
-                                <td><a href="https://quartz.jzhao.xyz/" target="_blank">Quartz 4</a></td>
-                                <td>Generate static website from markdown</td>
-                                <td><a href="https://opensource.org/licenses/MIT" target="_blank">MIT</a></td>
+                                <td data-label="Person/Project/Service"><a href="https://quartz.jzhao.xyz/" target="_blank">Quartz 4</a></td>
+                                <td data-label="Purpose">Generate static website from markdown</td>
+                                <td data-label="License"><a href="https://opensource.org/licenses/MIT" target="_blank">MIT</a></td>
                             </tr>
                             <tr>
                                 <td class="icon-col"></td>
-                                <td><a href="https://workers.cloudflare.com/" target="_blank">Cloudflare Workers</a></td>
-                                <td>Serverless hosting platform</td>
-                                <td>Commercial Service</td>
+                                <td data-label="Person/Project/Service"><a href="https://workers.cloudflare.com/" target="_blank">Cloudflare Workers</a></td>
+                                <td data-label="Purpose">Serverless hosting platform</td>
+                                <td data-label="License">Commercial Service</td>
                             </tr>
 
 
@@ -131,9 +186,9 @@
                             </tr>
                             <tr>
                                 <td class="icon-col"></td>
-                                <td><a href="https://umami.is/" target="_blank">Umami</a></td>
-                                <td>Cookieless, GDPR-compliant analytics platform</td>
-                                <td><a href="https://opensource.org/licenses/MIT" target="_blank">MIT</a> &amp; commercial cloud service</td>
+                                <td data-label="Person/Project/Service"><a href="https://umami.is/" target="_blank">Umami</a></td>
+                                <td data-label="Purpose">Cookieless, GDPR-compliant analytics platform</td>
+                                <td data-label="License"><a href="https://opensource.org/licenses/MIT" target="_blank">MIT</a> &amp; commercial cloud service</td>
                             </tr>
                         </tbody>
                     </table>
