@@ -1,0 +1,15 @@
+version: 2
+updates:
+  # npm only — the build output is a static site with no runtime dependency
+  # execution, but `npm ci` in CI still runs postinstall scripts and holds
+  # the Cloudflare Pages deploy token, so security alerts on the build-time
+  # dependency tree still matter. Docker (build-container base image only,
+  # never serves traffic) is deliberately left out.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
