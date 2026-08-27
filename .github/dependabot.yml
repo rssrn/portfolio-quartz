@@ -10,6 +10,14 @@ updates:
     schedule:
       interval: monthly
     groups:
+      # Minor and patch bumps only. Majors are deliberately excluded so they
+      # arrive as individual PRs: in PR #15 a single bad major (js-yaml 5,
+      # which dropped its default export and broke the Cloudflare build)
+      # blocked 28 otherwise-fine bumps in the same batch. Anything that does
+      # not match a group is raised in its own PR, so nothing is suppressed.
       npm-dependencies:
         patterns:
           - "*"
+        update-types:
+          - minor
+          - patch
